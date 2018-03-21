@@ -56,7 +56,9 @@ public class SpellCheckerController {
 
     @FXML
     void doCheck(ActionEvent event) {
-    
+    	long tempo1 = System.nanoTime();
+    	txtWrong.clear();
+    	
     	String inputString ="";
     	String lang="";
     	int numErr=0;
@@ -65,13 +67,15 @@ public class SpellCheckerController {
     	}
     	else {
     inputString=	txtInitial.getText();
-  //inputString.replaceAll("[.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]]\\", "");
+//    inputString.replaceAll("[.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]]\\"", "");
     	String sArray[]=inputString.split(" ");
     	LinkedList<String> inputTextList = new LinkedList<String>();
     	for(int i=0; i<sArray.length; i++) {
     		inputTextList.add(sArray[i]);
     	}
-    lang=boxLang.getSelectionModel().getSelectedItem();
+//    lang=boxLang.getSelectionModel().getSelectedItem();
+    	//comodo per fare più veloce
+    lang=boxLang.getValue();
     dictionary.loadDictionary(lang);
     LinkedList<RichWord> wrongWords = new LinkedList<RichWord>(dictionary.spellCheckText(inputTextList));
     	
@@ -79,13 +83,25 @@ public class SpellCheckerController {
     	numErr++;
     	txtWrong.appendText(w.getWord()+" ");
     }
-    errCounter.setText("The text contains"+numErr+" errors");
+    long tempo2 = System.nanoTime();
+	long tempoFinal = (tempo2-tempo1);
+	String time = String.valueOf(tempoFinal);
+	timeCounter.setText("Spell check completed in "+time+" nanoseconds");
+    if(numErr==0) {
+    	 errCounter.setText("The text do not contains any error");
+    } else if(numErr==1) {
+   	 errCounter.setText("The text contains 1 error");
+    } else {
+    errCounter.setText("The text contains " +numErr+" errors");
+    }
     	}
+    	
     }
 
     @FXML
     void doClear(ActionEvent event) {
-
+    	txtInitial.clear();
+    	txtWrong.clear();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -97,5 +113,6 @@ public class SpellCheckerController {
         assert errCounter != null : "fx:id=\"errCounter\" was not injected: check your FXML file 'SpellChecker.fxml'.";
         assert btnClear != null : "fx:id=\"btnClear\" was not injected: check your FXML file 'SpellChecker.fxml'.";
         assert timeCounter != null : "fx:id=\"timeCounter\" was not injected: check your FXML file 'SpellChecker.fxml'.";
+        this.setDictionary(new Dictionary());
     }
 }
