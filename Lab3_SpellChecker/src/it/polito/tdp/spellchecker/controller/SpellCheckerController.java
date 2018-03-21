@@ -7,6 +7,7 @@ package it.polito.tdp.spellchecker.controller;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 import it.polito.tdp.spellchecker.model.Dictionary;
 import it.polito.tdp.spellchecker.model.RichWord;
@@ -24,7 +25,7 @@ public class SpellCheckerController {
 	
 	public void setDictionary(Dictionary d) {
 		this.dictionary=d;
-		boxLang.getItems().addAll("Italian", "English");
+		boxLang.getItems().addAll("Italian", "English", "Italian_back");
 	}
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -76,6 +77,9 @@ public class SpellCheckerController {
 //    lang=boxLang.getSelectionModel().getSelectedItem();
     	//comodo per fare più veloce
     lang=boxLang.getValue();
+    if(lang==null) {
+    		txtWrong.setText("Error. You have to choose the language.");
+    } else {
     dictionary.loadDictionary(lang);
     LinkedList<RichWord> wrongWords = new LinkedList<RichWord>(dictionary.spellCheckText(inputTextList));
     	
@@ -85,8 +89,11 @@ public class SpellCheckerController {
     }
     long tempo2 = System.nanoTime();
 	long tempoFinal = (tempo2-tempo1);
-	String time = String.valueOf(tempoFinal);
-	timeCounter.setText("Spell check completed in "+time+" nanoseconds");
+	double seconds = (double)tempoFinal / 1000000000.0;
+//	Perdo precisione di numero
+//	double timeSeconds = TimeUnit.NANOSECONDS.toSeconds( tempoFinal);
+	
+	timeCounter.setText("Spell check completed in "+seconds+" seconds");
     if(numErr==0) {
     	 errCounter.setText("The text do not contains any error");
     } else if(numErr==1) {
@@ -94,8 +101,7 @@ public class SpellCheckerController {
     } else {
     errCounter.setText("The text contains " +numErr+" errors");
     }
-    	}
-    	
+    	}}
     }
 
     @FXML
