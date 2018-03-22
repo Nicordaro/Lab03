@@ -43,10 +43,10 @@ public class Dictionary {
 			for(RichWord w: wrongWords) {
 				if(rw.getWord().compareTo(w.getWord())==0) {
 					toRemove=w;
-					}}
-				wrongWords.remove(toRemove);
+					}
 			}
-		
+			wrongWords.remove(toRemove);
+		}
 		return wrongWords;
 		
 		

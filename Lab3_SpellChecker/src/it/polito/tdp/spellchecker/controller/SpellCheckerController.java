@@ -67,7 +67,7 @@ public class SpellCheckerController {
     	}
     	else {
     inputString=	txtInitial.getText();
-//    inputString.replaceAll("[.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]]\\"", "");
+    inputString=inputString.replaceAll("[.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
     	String sArray[]=inputString.split(" ");
     	LinkedList<String> inputTextList = new LinkedList<String>();
     	for(int i=0; i<sArray.length; i++) {
