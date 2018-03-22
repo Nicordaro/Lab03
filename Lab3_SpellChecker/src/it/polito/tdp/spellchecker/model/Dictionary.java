@@ -23,6 +23,7 @@ public class Dictionary {
 	}
 	
 	public List<RichWord> spellCheckText(List<String> inputTextList){
+		RichWord toRemove=null;
 		List<RichWord> wrongWords = new LinkedList<RichWord>();
 		for(String s: inputTextList) {
 			wrongWords.add(new RichWord(s));
@@ -40,10 +41,12 @@ public class Dictionary {
 		
 		for(RichWord rw: allWords) {
 			for(RichWord w: wrongWords) {
-				if(rw.getWord().compareTo(w.getWord())==0)
-					wrongWords.remove(w);
+				if(rw.getWord().compareTo(w.getWord())==0) {
+					toRemove=w;
+					}}
+				wrongWords.remove(toRemove);
 			}
-		}
+		
 		return wrongWords;
 		
 		
