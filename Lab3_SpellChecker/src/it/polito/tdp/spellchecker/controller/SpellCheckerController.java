@@ -7,7 +7,6 @@ package it.polito.tdp.spellchecker.controller;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 import it.polito.tdp.spellchecker.model.Dictionary;
 import it.polito.tdp.spellchecker.model.RichWord;
