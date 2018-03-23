@@ -80,7 +80,7 @@ public class SpellCheckerController {
     		txtWrong.setText("Error. You have to choose the language.");
     } else {
     dictionary.loadDictionary(lang);
-    LinkedList<RichWord> wrongWords = new LinkedList<RichWord>(dictionary.spellCheckText(inputTextList));
+    LinkedList<RichWord> wrongWords = new LinkedList<RichWord>(dictionary.spellCheckTextDichotomic(inputTextList));
     	
     for(RichWord w:wrongWords) {
     	numErr++;
